@@ -16,6 +16,12 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    admin: {
+      type: Boolean,
+    },
+    member: {
+      type: Boolean,
+    },
   },
   { timestamps: true }
 );

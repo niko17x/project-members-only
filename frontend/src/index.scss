@@ -1,0 +1,89 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+.st {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.message-btn-container {
+  display: flex;
+  place-content: center;
+  margin-top: 50px;
+  .message-btn {
+    border: none;
+    background: transparent;
+    border: 1px solid rgb(176, 176, 176);
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+}
+
+.message-container {
+  border-radius: 5px;
+  height: 80vh;
+  width: 80vw;
+  li {
+    border: 2px solid cornflowerblue;
+    border-radius: 5px;
+    padding: 0.5rem;
+    list-style-type: none;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .message-text {
+    font-size: 1.2rem;
+  }
+  .delete-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+}
+
+.messageInput {
+  margin-top: 20px;
+  border-radius: 5px;
+  white-space: none;
+  form {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    gap: 1rem;
+    width: 80vw;
+  }
+  input {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 1.1rem;
+  }
+  button {
+    background-color: transparent;
+    border: 1px solid gray;
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+}
+
+.formContainer {
+  .member-link {
+    /* Your CSS styles for the link */
+    cursor: pointer;
+    color: #0c6efd;
+  }
+}

@@ -1,6 +1,8 @@
 import asyncHandler from "express-async-handler";
 import { generateToken } from "../utils/generateToken.js";
 import { User } from "../models/userModels.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -20,7 +22,7 @@ export const authUser = asyncHandler(async (req, res) => {
 });
 
 export const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, adminCode, memberCode } = req.body;
   const userExists = await User.findOne({ email });
 
   if (userExists) {
@@ -28,10 +30,15 @@ export const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
+  const isAdmin = adminCode === process.env.ADMIN_CODE;
+  const isMember = memberCode === process.env.MEMBER_CODE;
+
   const user = await User.create({
     name,
     email,
     password,
+    admin: isAdmin,
+    member: isMember,
   });
 
   if (user) {
@@ -40,6 +47,8 @@ export const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      admin: user.admin,
+      member: user.member,
     });
   } else {
     res.status(400);
@@ -74,16 +83,22 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
     console.log(user);
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.member =
+      user.member === true || req.body.member === process.env.MEMBER_CODE
+        ? true
+        : false;
 
     if (req.body.password) {
       user.password = req.body.password;
     }
 
     const updatedUser = await user.save();
+
     res.status(200).json({
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      member: updatedUser.member,
     });
   } else {
     res.status(404);

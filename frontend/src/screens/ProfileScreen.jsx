@@ -9,12 +9,14 @@ import { toast } from "react-toastify";
 import { Loader } from "../components/Loader.jsx";
 import { setCredentials } from "../slices/authSlice.js";
 import { useUpdateUserMutation } from "../slices/usersApiSlice.js";
+import { LinkContainer } from "react-router-bootstrap";
 
 export const ProfileScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [member, setMember] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -26,7 +28,17 @@ export const ProfileScreen = () => {
   useEffect(() => {
     setName(userInfo.name);
     setEmail(userInfo.email);
-  }, [userInfo.setName, userInfo.setEmail]);
+  }, [userInfo.name, userInfo.email]);
+
+  const memberStatus = () => {
+    if (userInfo.member === true && member) {
+      toast.error("You are already a member");
+      return;
+    } else if (member && member !== "member2024") {
+      toast.error("Member code is incorrect");
+    }
+    setMember("");
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -40,6 +52,7 @@ export const ProfileScreen = () => {
           name,
           email,
           password,
+          member,
         }).unwrap();
         dispatch(setCredentials({ ...res }));
         toast.success("Profile updated");
@@ -47,10 +60,11 @@ export const ProfileScreen = () => {
         toast.error(err?.data?.message || err.error);
       }
     }
+    memberStatus();
   };
 
   return (
-    <FormContainer>
+    <FormContainer className="profileScreen">
       <h1>Update Profile</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="my-2" controlId="name">
@@ -87,6 +101,17 @@ export const ProfileScreen = () => {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group className="my-2" controlId="member">
+          <LinkContainer to="/member-status" className="member-link">
+            <Form.Label>Become a Member</Form.Label>
+          </LinkContainer>
+          <Form.Control
+            type="text"
+            placeholder="Enter code"
+            value={member}
+            onChange={(e) => setMember(e.target.value)}
           ></Form.Control>
         </Form.Group>
 

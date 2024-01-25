@@ -13,6 +13,8 @@ export const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [admin, setAdmin] = useState("");
+  const [member, setMember] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,12 +31,17 @@ export const RegisterScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
     } else {
       try {
-        const res = await register({ name, email, password }).unwrap();
+        const res = await register({
+          name,
+          email,
+          password,
+          adminCode: admin,
+          memberCode: member,
+        }).unwrap();
         dispatch(setCredentials({ ...res }));
         navigate("/");
       } catch (err) {
@@ -81,6 +88,24 @@ export const RegisterScreen = () => {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group className="my-2" controlId="admin">
+          <Form.Label>Admin Code</Form.Label>
+          <Form.Control
+            type="admin"
+            placeholder="Admin Code"
+            value={admin}
+            onChange={(e) => setAdmin(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group className="my-2" controlId="member">
+          <Form.Label>Member Code</Form.Label>
+          <Form.Control
+            type="member"
+            placeholder="Member Code"
+            value={member}
+            onChange={(e) => setMember(e.target.value)}
           ></Form.Control>
         </Form.Group>
 

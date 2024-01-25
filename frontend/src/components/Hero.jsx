@@ -4,13 +4,14 @@ import { LinkContainer } from "react-router-bootstrap";
 export const Hero = () => {
   return (
     <div className=" py-5">
-      <Container className="d-flex justify-content-center">
+      <Container className="d-flex justify-content-center hero-container">
         <Card className="p-5 d-flex flex-column align-items-center hero-card bg-light w-75">
-          <h1 className="text-center mb-4">MERN Authentication</h1>
+          <h1 className="text-center mb-4">
+            Welcome to our super secret messaging app!
+          </h1>
           <p className="text-center mb-4">
-            This is a boilerplate for MERN authentication that stores a JWT in
-            an HTTP-Only cookie. It also uses Redux Toolkit and the React
-            Bootstrap library
+            Join us to experience a unique messaging platform to connect with
+            your peers
           </p>
           <div className="d-flex">
             <LinkContainer to="/login">
@@ -24,6 +25,11 @@ export const Hero = () => {
           </div>
         </Card>
       </Container>
+      <div className="message-btn-container">
+        <LinkContainer to="/messages">
+          <button className="message-btn">View Messages</button>
+        </LinkContainer>
+      </div>
     </div>
   );
 };

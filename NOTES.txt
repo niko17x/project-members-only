@@ -1,0 +1,43 @@
+Implement message for users. Each message should be stored in database with user data like username and user ID.
+
+Non-members can only view the message only - no additional details.
+  Homescreen shows visitor the option to sign in, register or just view messages.
+  Visitor can click 'view messages' and is then taken to message screen.
+  Message screen has the option for the user to join club or sign in.
+    If user wants to join, they are redirected to the main home screen to register.
+
+Implementing special membership status:
+  User can enter passcode when signed in with their account.
+  Add a link on main page for user to enter passcode.
+  Create a page user can go to for entering in passcode.
+  Upon successful validation of passcode, user is in `exclusive status` and gets membership perks.
+
+Membership perks:
+  Members can see the author and date of each message.
+
+Admins:
+  Admin Screen for admin functions.
+  A user can register as an admin.
+  Admin status grants user to delete or modify any message.
+  Revoke member status of profiles.
+
+USERS CAN BE:
+  1. Not authenticated.
+    - Only view message itself only.
+  2. Authenticated but not a member.
+    - View message & create new messages & delete message.
+  3. Authenticated & a member.
+    - View message with details & create new messages & delete message.
+
+DELETING MESSAGES:
+  1. User must be authenticated.
+    - Authenticated users can view delete button on their own messages.
+  2. User clicking on delete button removes message from mongo db.
+
+TODO:
+  1. Create a page for Admin functionality.
+    - Deleting users.
+  2. Create a page where users can become a member.
+    - User must be already authenticated to visit page.
+    - Add a simple question that grants member status to currently authenticated user.
+      - Upon success, current authenticated user becomes member status by default.
