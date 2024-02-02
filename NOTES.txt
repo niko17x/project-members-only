@@ -35,9 +35,8 @@ DELETING MESSAGES:
   2. User clicking on delete button removes message from mongo db.
 
 TODO:
-  1. Create a page for Admin functionality.
-    - Deleting users.
-  2. Create a page where users can become a member.
-    - User must be already authenticated to visit page.
-    - Add a simple question that grants member status to currently authenticated user.
-      - Upon success, current authenticated user becomes member status by default.
+  1. Rethink state for name, email and member in AdminScreen.jsx as single state for multiple users is not going to work.
+  2. Directing admin to selected user profile page to make edits.
+    - Currently unable to direct user to selected profile page.
+    - Idea: Create a URL for each user profile '/api/users/profile/:id' in order to access selected user profile & data so updates can be made.
+      - useParams() to implement this feature.

@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export const MemberScreen = () => {
   const [answer, setAnswer] = useState("");
   const [isCorrect, setIsCorrect] = useState();
+
+  const navigate = useNavigate();
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,12 +35,7 @@ export const MemberScreen = () => {
       });
 
       const data = await response.json();
-
-      console.log(data.answer);
-
-      if (data.answer) {
-        setIsCorrect(true);
-      }
+      data.answer ? setIsCorrect(true) : setIsCorrect(false);
     } catch (error) {
       console.error(error);
     }
@@ -52,5 +59,3 @@ export const MemberScreen = () => {
     </div>
   );
 };
-
-// TODO: User submits correct answer => Success message provided => authenticated user becomes member automatically => member code is provided on screen.

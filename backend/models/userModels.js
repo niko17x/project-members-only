@@ -22,6 +22,9 @@ const userSchema = mongoose.Schema(
     member: {
       type: Boolean,
     },
+    memberSince: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );

@@ -82,8 +82,54 @@ body {
 
 .formContainer {
   .member-link {
-    /* Your CSS styles for the link */
     cursor: pointer;
     color: #0c6efd;
+  }
+  .button-group {
+    display: grid;
+  }
+  .admin-link {
+    cursor: pointer;
+    color: #0c6efd;
+  }
+}
+
+.adminScreen {
+  display: grid;
+  ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-content: center;
+    gap: 2rem;
+    list-style-type: none;
+  }
+  form {
+    display: grid;
+    gap: 0.3rem;
+    border: 1px solid black;
+    padding: 1rem;
+    border-radius: 5px;
+
+    input {
+      border: none;
+      background: none;
+      outline: none;
+      border-bottom: 1px solid gray;
+      width: 100%;
+    }
+    label {
+      padding: 0.3rem;
+    }
+  }
+  .btn {
+    border: 1px solid rgb(12, 110, 253);
+    border-radius: 5px;
+    padding: 0.5rem;
+    background: transparent;
+    font-weight: 600;
+    color: rgb(12, 110, 253);
+    width: 200px;
+    display: grid;
+    place-self: center;
   }
 }

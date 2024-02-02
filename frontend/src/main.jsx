@@ -18,6 +18,8 @@ import { ProfileScreen } from "./screens/ProfileScreen.jsx";
 import { PrivateRoute } from "./components/PrivateRoute.jsx";
 import { MessageScreen } from "./screens/MessageScreen.jsx";
 import { MemberScreen } from "./screens/MemberScreen.jsx";
+import { AdminScreen } from "./screens/AdminScreen.jsx";
+import { SelectedProfileScreen } from "./screens/SelectedProfileScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,12 +27,15 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
-      {/* Private Route */}
+      {/* Private Routes */}
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<ProfileScreen />} />
       </Route>
+      {/* Private Routes */}
       <Route path="/messages" element={<MessageScreen />} />
       <Route path="/member-status" element={<MemberScreen />} />
+      <Route path="/admin" element={<AdminScreen />} />
+      <Route path="/selected-profile/:id" element={<SelectedProfileScreen />} />
     </Route>
   )
 );

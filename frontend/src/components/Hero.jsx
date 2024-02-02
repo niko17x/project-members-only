@@ -1,7 +1,10 @@
 import { Container, Card, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 
 export const Hero = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+
   return (
     <div className=" py-5">
       <Container className="d-flex justify-content-center hero-container">
@@ -13,16 +16,26 @@ export const Hero = () => {
             Join us to experience a unique messaging platform to connect with
             your peers
           </p>
-          <div className="d-flex">
-            <LinkContainer to="/login">
-              <Button variant="primary" className="me-3">
-                Sign In
-              </Button>
-            </LinkContainer>
-            <LinkContainer to="/register">
-              <Button variant="secondary">Register</Button>
-            </LinkContainer>
-          </div>
+          {!userInfo ? (
+            <div className="d-flex">
+              <LinkContainer to="/login">
+                <Button variant="primary" className="me-3">
+                  Sign In
+                </Button>
+              </LinkContainer>
+              <LinkContainer to="/register">
+                <Button variant="secondary">Register</Button>
+              </LinkContainer>
+            </div>
+          ) : (
+            <div className="d-flex">
+              <LinkContainer to="/member-status">
+                <Button variant="primary" className="me-3">
+                  Become a Member
+                </Button>
+              </LinkContainer>
+            </div>
+          )}
         </Card>
       </Container>
       <div className="message-btn-container">
