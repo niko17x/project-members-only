@@ -12,9 +12,6 @@ export const getAnswer = asyncHandler(async (req, res) => {
     const userAnswer = req.body.answer;
     const isCorrect =
       userAnswer.trim().toLowerCase() === process.env.MEMBER_ANSWER;
-    // const memberStatus = await Member.create({
-    //   answer: isCorrect,
-    // });
 
     if (isCorrect) {
       user.memberSince = new Date();

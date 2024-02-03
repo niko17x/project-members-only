@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 export const Message = () => {
   const [messages, setMessages] = useState([]);
+  const [isAdmin, setIsAdmin] = useState("");
 
   // ? How does this work
   const { userInfo } = useSelector((state) => state.auth);
@@ -26,7 +27,11 @@ export const Message = () => {
     };
 
     fetchData();
-  }, [userInfo]);
+  }, [userInfo, messages]);
+
+  useEffect(() => {
+    setIsAdmin(userInfo?.admin || false);
+  }, [userInfo?.admin]);
 
   const handleDeleteBtn = async (messageId) => {
     try {
@@ -34,7 +39,6 @@ export const Message = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          // Include authorization headers if needed
         },
       });
 
@@ -59,7 +63,7 @@ export const Message = () => {
         <ul className="message-ul">
           {messages.map((message) => (
             <li key={message._id}>
-              {userInfo && userInfo._id === message.userId ? (
+              {(userInfo && userInfo._id === message.userId) || isAdmin ? (
                 <button
                   className="delete-btn"
                   id={message._id}
@@ -77,7 +81,7 @@ export const Message = () => {
                   ${new Date(message.createdAt).toLocaleString()}`}
               </p>
               <p className="message-username st">
-                {userInfo && `User: ${message.username}`}
+                {userInfo && `User: ${message.username || "Secret"}`}
               </p>
             </li>
           ))}

@@ -14,6 +14,7 @@ export const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      admin: user.admin,
     });
   } else {
     res.status(401);
@@ -120,10 +121,9 @@ export const updateSelectedProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    user.member =
-      user.member === true || req.body.member === process.env.MEMBER_CODE
-        ? true
-        : false;
+    user.member = req.body.member;
+    console.log("user.member", user.member);
+    console.log("req.body.member", req.body.member);
     user.memberSince = req.body.memberDate || user.memberSince;
 
     if (req.body.password) {

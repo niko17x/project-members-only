@@ -5,7 +5,7 @@ import { Form, Button } from "react-bootstrap";
 import { FormContainer } from "../components/FormContainer.jsx";
 import { toast } from "react-toastify";
 import { Loader } from "../components/Loader.jsx";
-import { useUpdateUserMutation } from "../slices/usersApiSlice.js";
+import { useUpdateSelectedUserMutation } from "../slices/usersApiSlice.js";
 import { LinkContainer } from "react-router-bootstrap";
 import { useFetchAdmin } from "../hooks/useFetchAdmin.jsx";
 import { useParams } from "react-router-dom";
@@ -13,9 +13,10 @@ import { useParams } from "react-router-dom";
 export const SelectedProfileScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [member, setMember] = useState("");
+  const [member, setMember] = useState(false);
 
-  const [updateProfile, { isLoading }] = useUpdateUserMutation();
+  const [updateSelectedProfile, { isLoading }] =
+    useUpdateSelectedUserMutation();
   const { isAdmin } = useFetchAdmin();
   const { id } = useParams();
 
@@ -33,6 +34,7 @@ export const SelectedProfileScreen = () => {
       const result = await data.find((user) => user._id === id);
       setName(result.name);
       setEmail(result.email);
+      setMember(result.member ? true : false);
     };
     getUser();
   }, [id]);
@@ -45,9 +47,10 @@ export const SelectedProfileScreen = () => {
         _id: id,
         name,
         email,
-        member,
+        member: member,
       };
-      await updateProfile(updatedUser).unwrap();
+      console.log(updatedUser);
+      await updateSelectedProfile(updatedUser).unwrap();
       toast.success("Profile updated successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
@@ -55,7 +58,6 @@ export const SelectedProfileScreen = () => {
   };
 
   // TODO: For member status with admin view, there should be an option to revoke member status with a checkbox & also delete entire profile
-
   return (
     <FormContainer>
       <h1>Update Profile</h1>
@@ -78,17 +80,18 @@ export const SelectedProfileScreen = () => {
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Form.Group className="my-2" controlId="member">
-          <LinkContainer to="/member-status" className="member-link">
-            <Form.Label>Become a Member</Form.Label>
-          </LinkContainer>
-          <Form.Control
-            type="text"
-            placeholder="Enter code"
-            value={member}
-            onChange={(e) => setMember(e.target.value)}
-          ></Form.Control>
+
+        <Form.Group>
+          <label htmlFor="">
+            Member
+            <input
+              type="checkbox"
+              checked={member}
+              onChange={(e) => setMember(e.target.checked)}
+            />
+          </label>
         </Form.Group>
+
         {isAdmin && (
           <Form.Group>
             <LinkContainer to="/admin" className="admin-link">
