@@ -44,7 +44,7 @@ export const AdminScreen = () => {
         <h1>Hello, Admin</h1>
         <ul>
           {users
-            .filter((user) => user._id !== userInfo._id)
+            .filter((user) => user._id !== userInfo?._id)
             .map((user) => (
               <form action="" key={user._id}>
                 <li>{`ID: ${user._id}`}</li>

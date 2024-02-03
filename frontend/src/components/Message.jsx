@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { MessageInput } from "./MessageInput";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export const Message = () => {
   const [messages, setMessages] = useState([]);
@@ -47,6 +48,7 @@ export const Message = () => {
       }
 
       console.log("Message deleted");
+      toast.success("Message successfully deleted");
 
       // Update the local state to reflect the deletion
       setMessages((prevMessages) =>

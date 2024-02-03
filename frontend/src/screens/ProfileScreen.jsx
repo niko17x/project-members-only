@@ -45,14 +45,15 @@ export const ProfileScreen = () => {
   }, [userInfo.name, userInfo.email, userInfo.memberSince]);
 
   const memberStatus = () => {
-    if (userInfo.member === true && member) {
-      toast.error("You are already a member");
+    if (userInfo.member === true || (!userInfo.member && member === "")) {
       return;
-    } else if (member && member !== "member2024") {
-      toast.error("Member code is incorrect");
     }
-    toast.success("Congrats, you are now a member");
 
+    if (!userInfo.member && member !== "member2024") {
+      toast.error("Member code is incorrect");
+    } else {
+      toast.success("Congratulations, you are now a member");
+    }
     setMember("");
   };
 
@@ -79,8 +80,6 @@ export const ProfileScreen = () => {
     }
     memberStatus();
   };
-
-  // TODO: If user is member, show 'member since YEAR' otherwise, show option to become a member
 
   return (
     <FormContainer>
